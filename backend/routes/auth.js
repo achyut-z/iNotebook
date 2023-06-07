@@ -96,7 +96,7 @@ router.post('/login', [
 });
 
 //Get logged in user details: POST /appi/auth/get-user //Login required
-router.post('/get-user', fetchUser, async (req, res) => {
+router.get('/get-user', fetchUser, async (req, res) => {
 
     try {
         userId = req.user.id;
