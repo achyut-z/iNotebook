@@ -13,7 +13,7 @@ const NoteItem = (props) => {
             <div className="card my-3" >
                 <div className="card-body">
                     <h5 className="card-title">{note.title}</h5>
-                    <h6 className={note.tag === "default" ? "card-subtitle mb-2 badge rounded-pill bg-secondary" : "card-subtitle mb-2 badge rounded-pill bg-danger"}>{note.tag}</h6>
+                    <h6 className={note.tag === "default" ? "card-subtitle mb-2 badge rounded-pill bg-secondary" : "card-subtitle mb-2 badge rounded-pill text-bg-info"} >{note.tag}</h6>
                     <p className="card-text">{note.description}</p>
                     <div className="row">
                         <Link to="/" className="btn btn-warning col-md-3 my-1 mx-5 fa-solid fa-file-pen" onClick={() => { editNote(note)}} />
