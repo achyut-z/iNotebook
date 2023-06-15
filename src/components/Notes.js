@@ -27,7 +27,6 @@ const Notes = () => {
     const handleClick = (e) => {
 
         refClose.current.click();
-        console.log("Updating the note: ", note);
         updateNote(note.id, note.etitle, note.edescription, note.etag)
         e.preventDefault();
     }
