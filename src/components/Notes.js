@@ -24,7 +24,13 @@ const Notes = () => {
 
     }
 
-    const handleClick = (e) => {
+    const handleSubmit = (e) => {
+
+        const form = e.target;
+        if (!form.checkValidity()) {
+            form.reportValidity();
+            return;
+        }
 
         refClose.current.click();
         updateNote(note.id, note.etitle, note.edescription, note.etag)
@@ -49,11 +55,11 @@ const Notes = () => {
                             <button ref={refClose} type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div className="modal-body">
-                            <form>
+                            <form onSubmit={handleSubmit}>
                                 <div className="row">
                                     <div className="mb-3 col-md-4">
                                         <label htmlFor="etitle" className="form-label">Title</label>
-                                        <input type="text" className="form-control" value={note.etitle} id="etitle" name="etitle" onChange={onChange} />
+                                        <input type="text" className="form-control" value={note.etitle} id="etitle" name="etitle" onChange={onChange} minLength={5} required />
                                     </div>
                                     <div className="mb-3 col-md-4">
                                         <label htmlFor="etag" className="form-label">Tag</label>
@@ -62,12 +68,12 @@ const Notes = () => {
                                 </div>
                                 <div className="mb-3 col-md-8">
                                     <label htmlFor="edescription" className="form-label">Description  </label>
-                                    <input type="text" className="form-control" value={note.edescription} id="edescription" name="edescription" onChange={onChange} />
+                                    <input type="text" className="form-control" value={note.edescription} id="edescription" name="edescription" onChange={onChange} minLength={5} required />
+                                </div>
+                                <div className="modal-footer">
+                                    <button type="submit" className="btn btn-primary">Update note</button>
                                 </div>
                             </form>
-                        </div>
-                        <div className="modal-footer">
-                            <button type="submit" onClick={handleClick} className="btn btn-primary">Update note</button>
                         </div>
                     </div>
                 </div>

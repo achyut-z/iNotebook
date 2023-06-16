@@ -15,10 +15,11 @@ router.post('/create-user', [
     body('password', 'Password must be atleast 5 characters').isLength({ min: 5 })
 ], async (req, res) => {
 
+    let success = false;
     //checking for errors
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() })
+        return res.status(400).json({ success, errors: errors.array() })
     }
     try {
 
@@ -26,7 +27,7 @@ router.post('/create-user', [
         let user = await User.findOne({ email: req.body.email });
 
         if (user) {
-            return res.json({ error: "Sorry, a user with this email already exists" })
+            return res.json({ success, error: "Sorry, a user with this email already exists" })
         }
 
         //adding salt to hash the password
@@ -47,7 +48,8 @@ router.post('/create-user', [
 
         //creating jwt token for the user signing up
         const jwtToken = jwt.sign(data, JWT_SECRET_KEY)
-        res.json({ authToken: jwtToken })
+        success = true;
+        res.json({ success, authToken: jwtToken })
 
     } catch (error) {
         console.error(error.message);
@@ -65,7 +67,7 @@ router.post('/login', [
     //checking for errors
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() })
+        return res.status(400).json({ success, errors: errors.array() })
     }
 
     const { email, password } = req.body;
@@ -106,7 +108,7 @@ router.get('/get-user', fetchUser, async (req, res) => {
         res.send(user)
 
     } catch (error) {
-         res.status(500).send("Some error occured")
+        res.status(500).send("Some error occured")
     }
 })
 

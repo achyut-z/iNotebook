@@ -8,7 +8,7 @@ const AddNote = () => {
 
     const [note, setNote] = useState({ title: "", description: "", tag: "" })
 
-    const handleClick = (e) => {
+    const handleSubmit = (e) => {
 
         e.preventDefault();
         addNote(note.title, note.description, note.tag)
@@ -23,11 +23,11 @@ const AddNote = () => {
 
         <div className="container my-3">
             <h1>Add a note</h1>
-            <form>
+            <form  onSubmit={handleSubmit}>
                 <div className="row">
                     <div className="mb-3 col-md-4">
                         <label htmlFor="title" className="form-label">Title</label>
-                        <input type="text" className="form-control" id="title" name="title" value={note.title} onChange={onChange} />
+                        <input type="text" className="form-control" id="title" name="title" value={note.title} onChange={onChange} minLength={5} required />
                     </div>
                     <div className="mb-3 col-md-4">
                         <label htmlFor="tag" className="form-label">Tag</label>
@@ -36,9 +36,9 @@ const AddNote = () => {
                 </div>
                 <div className="mb-3 col-md-8">
                     <label htmlFor="description" className="form-label">Description  </label>
-                    <input type="text" className="form-control" id="description" name="description" value={note.description} onChange={onChange} />
+                    <input type="text" className="form-control" id="description" name="description" value={note.description} onChange={onChange} minLength={5} required />
                 </div>
-                <button disabled={note.title.length < 5 || note.description.length < 5} type="submit" className="btn btn-primary" onClick={handleClick}>Submit</button>
+                <button type="submit" className="btn btn-primary">Submit</button>
             </form>
         </div>
     )

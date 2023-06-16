@@ -40,24 +40,28 @@ const NoteState = (props) => {
   //update note
   const updateNote = async (id, title, description, tag) => {
 
+    const updatedTag = tag.trim() === '' ? '' : tag;
+
     const response = await fetch(`${host}/api/notes/update-note/${id}`, {
       method: 'PUT',
       headers: {
         'Content-type': 'application/json',
         'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjQ3ZjE0YzIzOGU2YTdmMzJmYzlkOTI5In0sImlhdCI6MTY4NjEzMjQ2Nn0.ICx1vHsY4mM2dFXZwotueHebN0XSlQQrCCwsLA4tylA'
       },
-      body: JSON.stringify({ title, description, tag })
+      body: JSON.stringify({ title, description, tag: updatedTag })
     });
-    const json = response.json();
+    // eslint-disable-next-line
+    const json = await response.json();
 
     let newNotes = JSON.parse(JSON.stringify(notes))
+
 
     for (let index = 0; index < newNotes.length; index++) {
       const element = newNotes[index];
       if (element._id === id) {
         newNotes[index].title = title;
         newNotes[index].description = description;
-        newNotes[index].tag = tag;
+        newNotes[index].tag = updatedTag;
         break;
       }
     }
@@ -75,7 +79,8 @@ const NoteState = (props) => {
         'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjQ3ZjE0YzIzOGU2YTdmMzJmYzlkOTI5In0sImlhdCI6MTY4NjEzMjQ2Nn0.ICx1vHsY4mM2dFXZwotueHebN0XSlQQrCCwsLA4tylA'
       },
     });
-    const json = response.json();
+    // eslint-disable-next-line
+    const json = await response.json();
     const newNote = notes.filter((note) => { return note._id !== id })
     setNotes(newNote);
 
