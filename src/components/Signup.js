@@ -1,37 +1,43 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 
-const Signup = () => {
+const Signup = (props) => {
 
-  const [credentials, setCredentials] = useState({ name:'', email: '', password: '', cpassword:'' })
-    const navigate = useNavigate();
+  const [credentials, setCredentials] = useState({ name: '', email: '', password: '', cpassword: '' })
+  const navigate = useNavigate();
 
-    const handleSubmit = async (e) => {
+  const handleSubmit = async (e) => {
 
-        e.preventDefault();
+    e.preventDefault();
 
-        const response = await fetch('http://localhost:5000/api/auth/create-user', {
-            method: 'POST',
-            headers: {
-                'Content-type': 'application/json'
-            },
-            body: JSON.stringify({ name: credentials.name, email: credentials.email, password: credentials.password })
-        });
-        const json = await response.json();
-
-        if (json.success) {
-            localStorage.setItem("token", json.authToken);
-            navigate("/");
-        }
-        else {
-            alert("Account with this email already exists")
-        }
+    if (credentials.cpassword !== credentials.password) {
+      props.showAlert("Password doesn't match", "warning")
+      return;
     }
 
-    const handleChange = (e) => {
+    const response = await fetch('http://localhost:5000/api/auth/create-user', {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify({ name: credentials.name, email: credentials.email, password: credentials.password })
+    });
+    const json = await response.json();
 
-        setCredentials({ ...credentials, [e.target.name]: e.target.value })
+    if (json.success) {
+      localStorage.setItem("token", json.authToken);
+      props.showAlert("Signed up successfully", "success")
+      navigate("/");
     }
+    else {
+      props.showAlert("Account with this email already exists", "danger")
+    }
+  }
+
+  const handleChange = (e) => {
+
+    setCredentials({ ...credentials, [e.target.name]: e.target.value })
+  }
 
   return (
     <>

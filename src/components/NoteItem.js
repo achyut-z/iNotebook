@@ -16,8 +16,8 @@ const NoteItem = (props) => {
                     <h6 className={`card-subtitle mb-2 badge rounded-pill ${note.tag ? 'text-bg-info' : 'bg-secondary'}`}  >{note.tag || 'default'}</h6>
                     <p className="card-text">{note.description}</p>
                     <div className="row">
-                        <Link to="/" className="btn btn-warning col-md-3 my-1 mx-5 fa-solid fa-file-pen" onClick={() => { editNote(note)}} />
-                        <Link to="/" className="btn btn-danger col-md-3 my-1 mx-5 fa-solid fa-trash-can" onClick={() => { deleteNote(note._id) }} />
+                        <Link to="/" className="btn btn-warning col-md-3 my-1 mx-5 fa-solid fa-file-pen" onClick={() => { editNote(note) }} />
+                        <Link to="/" className="btn btn-danger col-md-3 my-1 mx-5 fa-solid fa-trash-can" onClick={() => { deleteNote(note._id); props.showAlert("Deleted successfully", "success") }} />
                     </div>
                 </div>
             </div>

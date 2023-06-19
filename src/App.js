@@ -1,6 +1,6 @@
 // import logo from './logo.svg';
 import './App.css';
-// import { useState } from 'react';
+import { useState } from 'react';
 import Navbar from './components/Navbar';
 import Home from './components/Home';
 import About from './components/About';
@@ -12,16 +12,17 @@ import Signup from './components/Signup';
 
 function App() {
 
-  // const [alert, setAlert] = useState(null);
+  const [alert, setAlert] = useState(null);
 
-  // const showAlert = (message) => {
-  //   setAlert({
-  //     message: "This is alert message"
-  //   })
-  //   setTimeout(() => {
-  //     setAlert(null)
-  //   }, 1500)
-  // }
+  const showAlert = (message, type) => {
+    setAlert({
+      message: message,
+      type: type
+    })
+    setTimeout(() => {
+      setAlert(null)
+    }, 1500)
+  }
 
   return (
     <>
@@ -31,10 +32,10 @@ function App() {
           <Alert alert={alert}/>
           <div className="container my-3">
             <Routes>
-              <Route exact path="/" element={<Home />} />
+              <Route exact path="/" element={<Home showAlert={showAlert}/>} />
               <Route exact path="/about" element={<About />} />
-              <Route exact path="/login" element={<Login />} />
-              <Route exact path="/signup" element={<Signup />} />
+              <Route exact path="/login" element={<Login showAlert={showAlert}/>} />
+              <Route exact path="/signup" element={<Signup showAlert={showAlert}/>} />
             </Routes>
           </div>
         </Router>
