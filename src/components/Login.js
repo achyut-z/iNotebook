@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Login = (props) => {
 
@@ -48,6 +48,8 @@ const Login = (props) => {
                         <input type="password" className="form-control" id="password" name='password' value={credentials.password} onChange={handleChange} />
                     </div>
                     <button type="submit" className="btn btn-primary">Submit</button>
+                    <p className='mt-3'>Don't have an account? <Link to='/signup'> Click here</Link>
+                    </p>
                 </form>
             </div>
         </>
